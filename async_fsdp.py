@@ -232,7 +232,6 @@ class L_F(torch.autograd.Function):
                     _local = T.to_local()
                     if isinstance(_local, funcol.AsyncCollectiveTensor):
                         # funcol.wait_tensor(_local.elem)
-                        _local.wait()
                         return _local.wait()
                     else:
                         return _local
