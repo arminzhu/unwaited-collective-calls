@@ -1,8 +1,8 @@
 The bug is related to the code from line 225 to 333 in the `async_fsdp.py`.
 
-If we change `async_op=True` to `async_op=False` on line 283, the program runs more or less normally. Besides if we add `torch.cuda.synchronize()` at the beginning of the function `def update_parameters(block_idx)`, it also works fine.
+If we change `async_op=True` to `async_op=False` on line 283, the program runs more or less normally. Besides if we add `torch.cuda.synchronize()` at the beginning of the function `update_parameters()`, it also works fine.
 
-Additionally, I also used `async_op=True` in the `all_gather_param` function, but it doesn't affect the program's normal execution. This means the bug only occurs when using asynchronous transfer of DTensors in the backward hook. 
+Additionally, I also used `async_op=True` in the `all_gather_param()` function, but it doesn't affect the program's normal execution. This means the bug only occurs when using asynchronous transfer of DTensors in the backward hook. 
 
 Furthermore, this bug causes some tensors to fail to be released, leading to a continuous increase in GPU memory usage.
 
