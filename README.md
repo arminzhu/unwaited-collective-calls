@@ -1,3 +1,7 @@
+
+# This issue has already been resolved here https://github.com/pytorch/pytorch/issues/160833
+
+
 The bug is related to the code from line 225 to 333 in the `async_fsdp.py`.
 
 If we change `async_op=True` to `async_op=False` on line 283, the program runs more or less normally. Besides if we add `torch.cuda.synchronize()` at the beginning of the function `update_parameters()`, it also works fine.
@@ -7,4 +11,5 @@ Additionally, I also used `async_op=True` in the `all_gather_param()` function, 
 Furthermore, this bug causes some tensors to fail to be released, leading to a continuous increase in GPU memory usage.
 
 Finally, I found that DTensor's asynchronous communication seems to have numerical instability issues, which require further investigation.
+
 
